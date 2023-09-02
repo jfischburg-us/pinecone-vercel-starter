@@ -4,9 +4,12 @@ let pinecone: PineconeClient | null = null;
 
 export const getPineconeClient = async () => {
   if (!pinecone) {
+    if (!process.env.PINECONE_ENVIRONMENT || !process.env.PINECONE_API_KEY) {
+      throw new Error('Environment variables PINECONE_ENVIRONMENT and PINECONE_API_KEY must be set');
+    }
     pinecone = new PineconeClient({
-      environment: process.env.PINECONE_ENVIRONMENT!,
-      apiKey: process.env.PINECONE_API_KEY!,
+      environment: process.env.PINECONE_ENVIRONMENT,
+      apiKey: process.env.PINECONE_API_KEY,
     });
     await pinecone.init();
   }
