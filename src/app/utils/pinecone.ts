@@ -4,11 +4,11 @@ let pinecone: PineconeClient | null = null;
 
 export const getPineconeClient = async () => {
   if (!pinecone) {
-    pinecone = new PineconeClient();
-    await pinecone.init({
+    pinecone = new PineconeClient({
       environment: process.env.PINECONE_ENVIRONMENT!,
       apiKey: process.env.PINECONE_API_KEY!,
     });
+    await pinecone.init();
   }
   return pinecone
 }
